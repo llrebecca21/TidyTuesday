@@ -1,4 +1,4 @@
-install.packages("tidytuesdayR")
+# install.packages("tidytuesdayR")
 
 # tuesdata <- tidytuesdayR::tt_load('2025-06-03')
 ## OR
@@ -11,7 +11,7 @@ gutenberg_subjects <- tuesdata$gutenberg_subjects
 
 
 # Cleaning the Data
-install.packages("gutenbergr")
+# install.packages("gutenbergr")
 
 library(gutenbergr)
 library(dplyr)
