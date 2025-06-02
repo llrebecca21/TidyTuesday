@@ -1,0 +1,71 @@
+---
+title: "Gutenberg Analysis"
+format: html
+editor: visual
+---
+
+# Exploratory Data Analysis
+
+We have 4 data sets to work with that contain information on authors, language, subjects, and metadata.\  
+
+I will show some basic exploratory data analysis visuals to explore this data and see what seems interesting to investigate further.
+
+```{r}
+#| message: false
+#| warning: false
+source("~/Documents/R_Projects/TidyTuesday/R/Week_22_Gutenberg/Reading_Cleaning.R")
+
+# Change the objects into data frame data structures
+gutenberg_authors = as.data.frame(gutenberg_authors)
+gutenberg_languages = as.data.frame(gutenberg_languages)
+gutenberg_metadata = as.data.frame(gutenberg_metadata)
+gutenberg_subjects = as.data.frame(gutenberg_subjects)
+ga = gutenberg_authors
+
+#colnames(gutenberg_languages)
+#colnames(gutenberg_authors)
+#colnames(gutenberg_subjects)
+#colnames(gutenberg_metadata)
+
+# length(unique(gutenberg_languages$language))
+
+```
+
+## Authors
+
+```{r}
+#| message: false
+#| warning: false
+library(ggplot2)
+# Calculate age through birthdate and deathdate
+ga$age = ga$deathdate - ga$birthdate
+ggplot(ga, aes(x = age)) +
+  geom_histogram(fill = "skyblue", color = "darkblue")+
+  ylab("Count") + 
+  xlab("Age") + 
+  ggtitle("Age of Authors") + 
+  theme_bw()
+
+
+```
+
+## Languages
+
+```{r}
+
+top_lang = as.data.frame(table(gutenberg_languages$language)
+                         [order(table(gutenberg_languages$language),
+                                                    decreasing = TRUE)][1:10])
+names(top_lang) = c("Language", "Count")
+
+ggplot(top_lang, aes(x = Language, y = Count, label = Count))+
+  geom_text(vjust = -1.5)+
+  ylim(0,65000)+
+  ggtitle("Top 10 Most Popular Languages")+
+  geom_point(cex = 2.5, color = "red") + theme_bw()
+
+```
+
+
+
+
